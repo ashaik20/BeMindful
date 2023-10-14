@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "BeMindful",
-    "slug": "BeMindful",
+    "slug": "bemindful",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "58dc29ba-a7f8-4fae-9d7e-427e64f5b459"
+      }
+    },
+    "owner": "msubhash"
   }
 }
