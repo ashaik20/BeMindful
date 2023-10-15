@@ -10,27 +10,33 @@ import {
     FlatList,
   } from 'react-native';
 
-export default function SettingsScreen() {
+  const SettingsScreen = ({navigation}) =>  {
+
+    const handleSignOut = () => {
+        navigation.navigate('SignIn');
+    };
+
     return(
         <View style ={styles.container}>
             <Text style={styles.profile}>
                 Profile
             </Text>
             <Text style={styles.labels}>
-                Name:
+                Name: Adil Shaik
             </Text>
             <Text style={styles.labels}>
-                Username:
+                Email: adilshaik@gmail.com
             </Text>
             <Text style={styles.labels}>
-                Number of Check-Ins: 
+                Number of Check-Ins: 23
             </Text>
             <Text style={styles.labels}>
-                Number of Tasks Complete:
+                Number of Tasks Complete: 12
             </Text>
-            <Text style={styles.item}>
-                Sign Out
-            </Text>
+
+            <Button title="Sign Out" onPress={handleSignOut} />
+                
+            
         </View>
     );
 }
@@ -113,3 +119,4 @@ const styles = StyleSheet.create({
         borderBottomWidth: StyleSheet.hairlineWidth,
     },
 });
+export default SettingsScreen;

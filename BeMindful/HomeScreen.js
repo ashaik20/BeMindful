@@ -196,9 +196,6 @@ const HomeScreen = ({ navigation }) => {
                 
                 </View>
             </Modal>
-            <Text style={styles.img}>
-                IMAGE GOES HERE
-            </Text>
             <Text style={styles.qodtitle}>
                 Question of the Day
             </Text>

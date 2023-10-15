@@ -35,6 +35,13 @@ export default function MoodsScreen() {
       stroke: 'black', // Customize dot border color
     },
   };
+    if (data?.length === 0) {
+    return (
+      <View style={styles.screen}>
+        <Text>No chart data to display!</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.background}>

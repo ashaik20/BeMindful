@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Image, Text} from 'react-native';
 import axios from 'axios';
 const logo = require('./BeMindful.png');
+
 const SignUp = ({navigation}) => {  
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         textAlign: 'center',
-        textColor:'#000000',
+        color:'#000000',
         fontWeight: 'bold',
     },
 
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     text: {
         marginTop: '5%',
         marginBottom:'2.5%',
-        textColor:'#000000',
+        color:'#000000',
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 20,
