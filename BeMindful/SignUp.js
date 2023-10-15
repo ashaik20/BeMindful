@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Image, Text} from 'react-native';
 import axios from 'axios';
-
-const SignUp = () => {
+const logo = require('./BeMindful.png');
+const SignUp = ({navigation}) => {  
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    
     const data = {
         name: name,
         email: email,
@@ -26,8 +26,16 @@ const SignUp = () => {
           });
         };
 
+    const handleSignIn = () => {
+        navigation.navigate('SignIn');
+    };
+
     return (
-        <View style={styles.container}>
+        <View style={styles.container}>  
+
+            <Image 
+                style = {styles.image}
+                source = {logo} />
             <TextInput
                 style={styles.input}
                 placeholder="Name"
@@ -47,27 +55,57 @@ const SignUp = () => {
                 value={password}
                 onChangeText={setPassword}
             />
-            <Button title="Sign Up" onPress={handleSignUp} />
+            <Button title="Create Account" onPress={handleSignUp} />
+
+            <Text style = {styles.text}>Finished creating an account?</Text>
+            <Button title="Return" onPress={handleSignIn} />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-    },
     input: {
-        width: '100%',
-        height: 50,
-        borderWidth: 1,
-        borderColor: '#ccc',
+        width: '80%',
+        height: '10.5%',
+        marginLeft: '10%',
+        marginTop:'5%',
+        marginBottom: '5%',
+        borderWidth: 3,
         borderRadius: 5,
         padding: 10,
-        marginBottom: 10,
+        alignItems: 'center',
+        borderColor: '#000000',
+        backgroundColor: '#DD7373',
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: 'center',
+        textColor:'#000000',
+        fontWeight: 'bold',
     },
+
+    container: {
+        flex:1,
+        backgroundColor: '#FCEFE4',
+    },
+
+    text: {
+        marginTop: '5%',
+        marginBottom:'2.5%',
+        textColor:'#000000',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontSize: 20,
+    },
+    image: {
+        marginTop:'5%',
+        
+        marginLeft:'30%',
+        marginRight:'25%',
+        width:'40%',
+        height:'25%',
+        justifyContent: "center",
+        alignItems: "center",
+    }
 });
 
 export default SignUp;
