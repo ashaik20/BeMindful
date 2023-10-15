@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
 
-const SignUp = () => {
-    const [name, setName] = useState('');
+const SignIn = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const data = {
-        name: name,
         email: email,
         password: password,
       };
-    
-    const handleSignUp = async () => {
-        // Create a user object with the data to be sent to the server
-        const resp = await axios.post("http://10.52.159.164:3000/users/new", data)
+
+    const handleSignIn = async () => {
+        const resp = await axios.post("http://10.52.159.164:3000/users/login", data)
         .then((response) => {
             // Handle the response here (e.g., success message or further processing).
+            if (response.data === null) {
+                console.log("Invalid email or password");
+            } else {
             console.log('Success:', response.data);
+            }
           })
           .catch((error) => {
             // Handle errors here (e.g., display an error message).
@@ -26,14 +27,12 @@ const SignUp = () => {
           });
         };
 
+    const handleSignUp = () => {
+        navigation.navigate('SignUp');
+    };
+
     return (
-        <View style={styles.container}>
-            <TextInput
-                style={styles.input}
-                placeholder="Name"
-                value={name}
-                onChangeText={setName}
-            />
+        <View>
             <TextInput
                 style={styles.input}
                 placeholder="Email"
@@ -47,6 +46,8 @@ const SignUp = () => {
                 value={password}
                 onChangeText={setPassword}
             />
+            <Button title="Sign In" onPress={handleSignIn} />
+            <Text>Don't have an account?</Text>
             <Button title="Sign Up" onPress={handleSignUp} />
         </View>
     );
@@ -70,4 +71,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SignUp;
+export default SignIn;
