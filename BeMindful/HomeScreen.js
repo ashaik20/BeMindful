@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     StyleSheet,
     Button,
@@ -8,6 +8,8 @@ import {
     Alert,
     Column,
     FlatList,
+    Pressable,
+    Modal,
   } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -48,6 +50,19 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
 
+    checkin: {
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#F5f5dc',
+        margin: 10,
+        padding: 20,
+        borderWidth: 5,
+        borderColor: '#D34a4a',
+        backgroundColor: "#DD7373",
+        borderRadius: 5,
+        fontSize: 25
+    },
+
     title: {
         fontWeight: 'bold',
         textAlign: 'center',
@@ -82,6 +97,8 @@ const styles = StyleSheet.create({
     },
 });
 
+
+
 export default function HomeScreen() {
     return(
         <View style ={styles.container}>
@@ -97,9 +114,11 @@ export default function HomeScreen() {
             <Text style={styles.smr}>
                 See more answers
             </Text>
-            <Text style={styles.title}>
-                Daily Check in
-            </Text>
+            <Pressable onPress={null}>
+                <Text style={styles.checkin}>
+                    Daily Check in
+                </Text>
+            </Pressable>
             <Text style={styles.title}>
                 Tasks to complete today
             </Text>
