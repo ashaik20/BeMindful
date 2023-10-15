@@ -1,12 +1,20 @@
 import React from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
 export default function HomeScreen() {
     return(
-        <View>
-            <Text>
-                Home Screen
-            </Text>
+        <View style = {styles.container}>
+            
         </View>
     );
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#ffeccc',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  });

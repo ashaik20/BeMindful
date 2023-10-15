@@ -10,10 +10,6 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    // <View style={styles.container}>
-    //   <Text>BeMindful</Text>
-    //   <StatusBar style="auto" />
-    // </View>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SignIn">
         <Stack.Screen name="SignUp" component={SignUp} />
@@ -31,3 +27,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
