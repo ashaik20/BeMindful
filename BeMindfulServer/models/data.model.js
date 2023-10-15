@@ -8,5 +8,5 @@ const dataSchema = new Schema({
     q2: { type: String, required: true },
 })
 
-const data = mongoose.model('data', dataSchema)
-module.exports = data
+const Data = mongoose.model('Data', dataSchema)
+module.exports = Data
