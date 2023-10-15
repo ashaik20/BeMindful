@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 
 const BottomTab = () => {
     return (
-        <Tab.Navigator screenOptions ={() => ({headerShown: false, tabBarLabelStyle: {color: 'black'}})}>
+        <Tab.Navigator initialRouteName="Home" screenOptions ={() => ({headerShown: false, tabBarLabelStyle: {color: 'black'}})}>
             <Tab.Screen name="Journey" component={JourneyScreen} options={{tabBarIcon: () => (<MaterialCommunityIcons name="map-outline" size = {25} color="#DD7373"/> )}}/>
             <Tab.Screen name="Moods" component={MoodsScreen} options={{tabBarIcon: () => (<MaterialCommunityIcons name="emoticon-happy-outline" size = {25} color="#DD7373"/> )}}/>
             <Tab.Screen name='Home' component={HomeScreen} options={{tabBarIcon: () => (<MaterialCommunityIcons name="home-outline" size = {25} color="#DD7373"/> )}}/>

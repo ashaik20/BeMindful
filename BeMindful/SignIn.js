@@ -23,6 +23,7 @@ const SignIn = ({ navigation }) => {
                 handleModal(true);
             } else {
             console.log('Success:', response.data);
+            navigation.navigate('BottomTab');
             }
           })
           .catch((error) => {
@@ -42,8 +43,8 @@ const SignIn = ({ navigation }) => {
         style={styles.container}>
               <Modal visible = {modalVisible} animationType = 'slide'>
                 <View style={styles.container}>
-                <Text style = {styles.text}>Please retry</Text>
-                <MaterialCommunityIcons name = 'add' size = {24} onPress={() => handleModal(false)}/>
+                <Text style = {styles.error}>Username or Password is incorrect.</Text>
+                <MaterialCommunityIcons name = 'arrow-collapse-left' size = {24} onPress={() => handleModal(false)}/>
                 </View>
             </Modal>
 
@@ -100,6 +101,14 @@ const styles = StyleSheet.create({
         marginTop: '10%',
         marginBottom:'5%',
         fontWeight: 'bold',
+        textAlign: 'center',
+        fontSize: 25,
+    },
+    error: {
+        marginTop: '10%',
+        marginBottom:'5%',
+        fontWeight: 'bold',
+        color: '#DD7373',
         textAlign: 'center',
         fontSize: 25,
     },

@@ -1,5 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React, {useState} from 'react';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Slider from '@react-native-community/slider';
+
 import {
     StyleSheet,
     Button,
@@ -11,6 +14,7 @@ import {
     FlatList,
     Pressable,
     Modal,
+    TextInput,
   } from 'react-native';
 import BottomTab from './BottomTab';
 
@@ -50,6 +54,12 @@ const styles = StyleSheet.create({
         color: '#C7A2D4',
         paddingBottom: 15,
         fontSize: 12,
+    },
+
+    popup: {
+      fontSize:30, 
+      fontWeight:"bold",
+      textAlign: 'center'
     },
 
     checkin: {
@@ -101,11 +111,61 @@ const styles = StyleSheet.create({
 
 
 
+
 export default function HomeScreen() {
+  const [modalVisible, handleModal] = useState(false);
+  const [range, setRange] = useState(0);
+  const [value, onChangetext] = useState('');
+  const [value2, onChangetext2] = useState('');
     return(
-
-
         <View style ={styles.container}>
+          <Modal visible = {modalVisible} animationType = 'slide'>
+                <View style={styles.container}>
+                <Text style={styles.popup}>How are you Feeling Today?</Text>
+                <Slider
+                style={{width: 300, height: 50, padding: 20, margin: 10, alignSelf: 'center'}}
+                onValueChange={(value) => setRange(value)}
+                minimumValue={0}
+                maximumValue={10}
+                />
+                <Text style={styles.popup}>{Math.floor(range)}</Text>
+                <Text style={styles.popup}>What's on your mind?</Text>
+                <TextInput
+                editablemultiline
+                numberOfLines={4}
+                maxLength={100}
+                onChangeText={text => onChangetext(text)}
+                value={value}
+                style={{fontSize: 15, textAlign: 'center', padding: 20}}
+                borderRadius={5}
+                borderWidth={5}
+                borderColor={'#DD7373'}
+                backgroundColor={'#FCEFE4'}
+                padding={20}
+                ></TextInput>
+                <Text style={styles.popup}>What was your favorite part of today?</Text>
+                <TextInput
+                editablemultiline
+                numberOfLines={4}
+                maxLength={100}
+                onChangeText={text => onChangetext2(text)}
+                value={value2}
+                style={{fontSize: 15, textAlign: 'center', padding: 20}}
+                borderRadius={5}
+                borderWidth={5}
+                borderColor={'#DD7373'}
+                backgroundColor={'#FCEFE4'}
+                padding={20}
+                >
+                
+                </TextInput>
+                <View
+                style={{borderWidth: 5, borderRadius: 5, backgroundColor: '#FCEFE4', color: 'blue', padding: 20}}>
+                  <Button title = 'Submit' onPress={() => handleModal(false)}/>
+                </View>
+                
+                </View>
+            </Modal>
             <Text style={styles.img}>
                 IMAGE GOES HERE
             </Text>
@@ -118,7 +178,7 @@ export default function HomeScreen() {
             <Text style={styles.smr}>
                 See more answers
             </Text>
-            <Pressable onPress={null}>
+            <Pressable onPress={() => {handleModal(true);}}>
                 <Text style={styles.checkin}>
                     Daily Check in
                 </Text>
