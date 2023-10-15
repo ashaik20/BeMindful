@@ -11,6 +11,9 @@ app.use(express.json())
 const userRoutes = require('./controllers/user.controller')
 app.use('/users', userRoutes)
 
+const dataRoutes = require('./controllers/data.controller')
+app.use('/data', dataRoutes)
+
 app.get("/", (req, res) => res.send("Main page")); 
 
 const mongoose = require('mongoose')
