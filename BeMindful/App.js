@@ -1,17 +1,24 @@
 // import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack"; 
 import { NavigationContainer } from "@react-navigation/native";
-import BottomTab from "./BottomTab";
+import BottomTab from "./BottomTab"
+import SignUp from "./SignUp";
+import SignIn from "./SignIn";
+import SettingsScreen from "./SettingsScreen";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    // <View style={styles.container}>
-    //   <Text>BeMindful</Text>
-    //   <StatusBar style="auto" />
-    // </View>
     <NavigationContainer>
-      <BottomTab/>
-    </NavigationContainer>
+      <Stack.Navigator initialRouteName="SignIn" screenOptions ={() => ({headerShown: false})}>
+        <Stack.Screen name="SignUp" component={SignUp}  />
+        <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="BottomTab" component={BottomTab} />
+        <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer> 
   );
 }
 

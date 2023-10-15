@@ -1,4 +1,9 @@
+import { NavigationContainer } from '@react-navigation/native';
 import React, {useState} from 'react';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Slider from '@react-native-community/slider';
+import axios from 'axios';
+
 import {
     StyleSheet,
     Button,
@@ -10,7 +15,9 @@ import {
     FlatList,
     Pressable,
     Modal,
+    TextInput,
   } from 'react-native';
+import BottomTab from './BottomTab';
 
 const styles = StyleSheet.create({
     container: {
@@ -48,6 +55,12 @@ const styles = StyleSheet.create({
         color: '#C7A2D4',
         paddingBottom: 15,
         fontSize: 12,
+    },
+
+    popup: {
+      fontSize:30, 
+      fontWeight:"bold",
+      textAlign: 'center'
     },
 
     checkin: {
@@ -99,12 +112,90 @@ const styles = StyleSheet.create({
 
 
 
-export default function HomeScreen() {
+
+const HomeScreen = ({ navigation }) => {
+  const {email} = window.email;
+  const [modalVisible, handleModal] = useState(false);
+  const [range, setRange] = useState(0);
+  const [value, onChangetext] = useState('');
+  const [value2, onChangetext2] = useState('');
+
+  const data = {email: "Testing@testing.com", mood: range, q1: value, q2: value2 };
+
+  const handleButtonPress = () => {
+    handleSubmit();
+    handleModal(false)
+  };
+
+  const handleSubmit = async () => {
+    console.log(data);
+    const resp = await axios.post("http://10.52.159.164:3000/data/daily", data)
+      .then((response) => {
+        // Handle the response here (e.g., success message or further processing).
+        if (response.data === null) {
+          console.log('Failure:', response.data);
+        } else {
+          console.log('Success:', response.data);
+        }
+      })
+      .catch((error) => {
+        // Handle errors here (e.g., display an error message).
+        console.error('Error:', error.response.data);
+        handleModal(true);
+      });
+    };
+
     return(
         <View style ={styles.container}>
-            <Text style={styles.img}>
-                IMAGE GOES HERE
-            </Text>
+          <Modal visible = {modalVisible} animationType = 'slide'>
+                <View style={styles.container}>
+                <Text style={styles.popup}>How are you Feeling Today?</Text>
+                <Slider
+                style={{width: 300, height: 50, padding: 20, margin: 10, alignSelf: 'center'}}
+                onValueChange={(value) => setRange(value)}
+                minimumValue={0}
+                maximumValue={10}
+                />
+                <Text style={styles.popup}>{Math.floor(range)}</Text>
+                <Text style={styles.popup}>What's on your mind?</Text>
+                <TextInput
+                editablemultiline
+                numberOfLines={4}
+                maxLength={100}
+                onChangeText={text => onChangetext(text)}
+                value={value}
+                style={{fontSize: 15, textAlign: 'center', padding: 20}}
+                borderRadius={5}
+                borderWidth={5}
+                borderColor={'#DD7373'}
+                backgroundColor={'#FCEFE4'}
+                padding={20}
+                ></TextInput>
+                <Text style={styles.popup}>What was your favorite part of today?</Text>
+                <TextInput
+                editablemultiline
+                numberOfLines={4}
+                maxLength={100}
+                onChangeText={text => onChangetext2(text)}
+                value={value2}
+                style={{fontSize: 15, textAlign: 'center', padding: 20}}
+                borderRadius={5}
+                borderWidth={5}
+                borderColor={'#DD7373'}
+                backgroundColor={'#FCEFE4'}
+                padding={20}
+                >
+                
+                </TextInput>
+                <View
+                style={{borderWidth: 5, borderRadius: 5, backgroundColor: '#FCEFE4', color: 'blue', padding: 20}}>
+                  <Button title = 'Submit' onPress={() => 
+                    handleButtonPress()
+                    }/>
+                </View>
+                
+                </View>
+            </Modal>
             <Text style={styles.qodtitle}>
                 Question of the Day
             </Text>
@@ -114,7 +205,7 @@ export default function HomeScreen() {
             <Text style={styles.smr}>
                 See more answers
             </Text>
-            <Pressable onPress={null}>
+            <Pressable onPress={() => {handleModal(true);}}>
                 <Text style={styles.checkin}>
                     Daily Check in
                 </Text>
@@ -124,13 +215,15 @@ export default function HomeScreen() {
             </Text>
             <FlatList
             data={[
-            {key: 'Task 1'},
-            {key: 'Task 2'},
-            {key: 'Task 3'},
-            {key: 'Task 4'},
+              {key: 'Talk to at least one new person today!'},
+              {key: 'Take the leap and join a club!'},
+              {key: 'Take the initiative and be the leader for your group of friends!'},
+              {key: 'Plan an outing for your friends!'},
             ]}
             renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
             />
         </View>
     );
 }
+
+export default HomeScreen
