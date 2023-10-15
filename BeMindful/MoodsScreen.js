@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, SafeAreaView, FlatList, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, FlatList } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
+import { ScrollView } from 'react-native-virtualized-view';
+import axios from 'axios';
 
 export default function MoodsScreen() {
   const [data, setData] = useState([]); // Your data from the backend
 
   useEffect(() => {
-    // Fetch data from your backend and set it to the 'data' state
-    // Example: fetch data from an API
-    fetch('your-backend-api-url')
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error(error));
+        axios.get('http://10.52.159.164:3000/data/moods')
+        .then((response) => {
+          const resp = response.data;
+          const moodsArray = resp.map(item => item.mood);
+          setData(moodsArray);
+          console.log(moodsArray);
+      })
+        .catch ((error) => {
+        console.error('Error fetching data:', error);
+      });
   }, []);
+
 
   const screenWidth = Dimensions.get('window').width;
 
@@ -45,7 +52,7 @@ export default function MoodsScreen() {
         }}
         width={screenWidth}
         height={220}
-        yAxisSuffix="M" // You can customize the yAxisSuffix
+        yAxisSuffix="" // You can customize the yAxisSuffix
         yAxisInterval={2} // You can customize the yAxisInterval
         chartConfig={chartConfig} // Apply the custom chartConfig
         bezier
@@ -57,7 +64,7 @@ export default function MoodsScreen() {
       />
       <Text style={styles.title}>Mood Counts</Text>
       <Text style={styles.moodcount}>
-            You logged 12 moods in the last week! Keep it up!
+            You logged 7 moods in the last week! Keep it up!
         </Text>
         <Text style={styles.title}>Highlights & Lowlights</Text>
         <FlatList

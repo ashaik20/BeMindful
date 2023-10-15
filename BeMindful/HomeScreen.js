@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import React, {useState} from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
+import axios from 'axios';
 
 import {
     StyleSheet,
@@ -112,11 +113,38 @@ const styles = StyleSheet.create({
 
 
 
-export default function HomeScreen() {
+const HomeScreen = ({ navigation }) => {
+  const {email} = window.email;
   const [modalVisible, handleModal] = useState(false);
   const [range, setRange] = useState(0);
   const [value, onChangetext] = useState('');
   const [value2, onChangetext2] = useState('');
+
+  const data = {email: "Testing@testing.com", mood: range, q1: value, q2: value2 };
+
+  const handleButtonPress = () => {
+    handleSubmit();
+    handleModal(false)
+  };
+
+  const handleSubmit = async () => {
+    console.log(data);
+    const resp = await axios.post("http://10.52.159.164:3000/data/daily", data)
+      .then((response) => {
+        // Handle the response here (e.g., success message or further processing).
+        if (response.data === null) {
+          console.log('Failure:', response.data);
+        } else {
+          console.log('Success:', response.data);
+        }
+      })
+      .catch((error) => {
+        // Handle errors here (e.g., display an error message).
+        console.error('Error:', error.response.data);
+        handleModal(true);
+      });
+    };
+
     return(
         <View style ={styles.container}>
           <Modal visible = {modalVisible} animationType = 'slide'>
@@ -161,7 +189,9 @@ export default function HomeScreen() {
                 </TextInput>
                 <View
                 style={{borderWidth: 5, borderRadius: 5, backgroundColor: '#FCEFE4', color: 'blue', padding: 20}}>
-                  <Button title = 'Submit' onPress={() => handleModal(false)}/>
+                  <Button title = 'Submit' onPress={() => 
+                    handleButtonPress()
+                    }/>
                 </View>
                 
                 </View>
@@ -188,13 +218,15 @@ export default function HomeScreen() {
             </Text>
             <FlatList
             data={[
-            {key: 'Task 1'},
-            {key: 'Task 2'},
-            {key: 'Task 3'},
-            {key: 'Task 4'},
+              {key: 'Talk to at least one new person today!'},
+              {key: 'Take the leap and join a club!'},
+              {key: 'Take the initiative and be the leader for your group of friends!'},
+              {key: 'Plan an outing for your friends!'},
             ]}
             renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
             />
         </View>
     );
 }
+
+export default HomeScreen

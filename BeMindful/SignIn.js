@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, Modal, StyleSheet, Image} from 'react-na
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 
+
 const logo = require('./BeMindful.png');
 
 const SignIn = ({ navigation }) => {
@@ -22,8 +23,23 @@ const SignIn = ({ navigation }) => {
             if (response.data === null) {
                 handleModal(true);
             } else {
-            console.log('Success:', response.data);
-            navigation.navigate('BottomTab');
+
+
+          /*  AsyncStorage.setItem('user', response.data.name)
+            .then(() => {
+                AsyncStorage.setItem('email', response.data.email)
+            .then(() => {
+                console.log('Success:', response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+            })
+            .catch((error) => {
+                console.error(error);
+            }); */
+
+            navigation.navigate('BottomTab', {email: response.data.email});
             }
           })
           .catch((error) => {
@@ -43,8 +59,10 @@ const SignIn = ({ navigation }) => {
         style={styles.container}>
               <Modal visible = {modalVisible} animationType = 'slide'>
                 <View style={styles.container}>
-                <Text style = {styles.error}>Username or Password is incorrect.</Text>
-                <MaterialCommunityIcons name = 'arrow-collapse-left' size = {24} onPress={() => handleModal(false)}/>
+                <Text style = {styles.error}>Username or Password</Text>
+                <Text style = {styles.error2}>is incorrect. Please re-enter </Text>
+                <Text style = {styles.error3}>your username and password. </Text>
+                <MaterialCommunityIcons name = 'arrow-collapse-left' size = {40} style={{ alignSelf: 'center' }} onPress={() => handleModal(false)}/>
                 </View>
             </Modal>
 
@@ -105,12 +123,30 @@ const styles = StyleSheet.create({
         fontSize: 25,
     },
     error: {
-        marginTop: '10%',
+        marginTop: '70%',
         marginBottom:'5%',
         fontWeight: 'bold',
         color: '#DD7373',
         textAlign: 'center',
         fontSize: 25,
+        alignSelf: 'center',
+    },
+    error2: {
+        marginTop: '0%',
+        marginBottom:'5%',
+        fontWeight: 'bold',
+        color: '#DD7373',
+        textAlign: 'center',
+        fontSize: 25,
+        alignSelf: 'center',
+    },
+    error3: {
+        marginBottom:'15%',
+        fontWeight: 'bold',
+        color: '#DD7373',
+        textAlign: 'center',
+        fontSize: 25,
+        alignSelf: 'center',
     },
     image: {
         marginTop:'5%',

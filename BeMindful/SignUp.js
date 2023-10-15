@@ -22,7 +22,7 @@ const SignUp = ({navigation}) => {
           })
           .catch((error) => {
             // Handle errors here (e.g., display an error message).
-            console.error('Error:', error);
+            console.error('Error:', error.response.data);
           });
         };
 
