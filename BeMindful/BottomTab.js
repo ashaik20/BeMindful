@@ -1,4 +1,4 @@
-import React from 'react'
+/* import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import HomeScreen from './HomeScreen';
@@ -24,3 +24,4 @@ const BottomTab = () => {
 export default BottomTab
 
 const styles = StyleSheet.create({})
+*/
