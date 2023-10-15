@@ -1,78 +1,130 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, FlatList, ScrollView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
-// import * as ReactDOM from "react-dom";
-// import {
-//     Chart,
-//     ChartTitle,
-//     ChartSeries,
-//     ChartSeriesItem,
-//     ChartCategoryAxis,
-//     ChartCategoryAxisItem,
-//   } from "@progress/kendo-react-charts";
-// import "hammerjs";
-// const categories = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
-
 
 export default function MoodsScreen() {
-    const [data, setData] = useState([]); // Your data from the backend
+  const [data, setData] = useState([]); // Your data from the backend
 
-    useEffect(() => {
-        // Fetch data from your backend and set it to the 'data' state
-        // Example: fetch data from an API
-        fetch('your-backend-api-url')
-        .then((response) => response.json())
-        .then((data) => setData(data))
-        .catch((error) => console.error(error));
-    }, []);
+  useEffect(() => {
+    // Fetch data from your backend and set it to the 'data' state
+    // Example: fetch data from an API
+    fetch('your-backend-api-url')
+      .then((response) => response.json())
+      .then((data) => setData(data))
+      .catch((error) => console.error(error));
+  }, []);
 
-    const screenWidth = Dimensions.get('window').width;
-    
-    return (
-        <View style={screenstyle.container}>
-          <Text style={title.container}>Moods</Text>
-          <LineChart
-            data={{
-              labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'], // Replace with your labels
-              datasets: [
-                {
-                  data, // Use the data from your backend here
-                },
-              ],
-            }}
-            width={screenWidth}
-            height={220}
-            yAxisSuffix="M" // You can customize the yAxisSuffix
-            yAxisInterval={2} // You can customize the yAxisInterval
-            chartConfig={{
-              backgroundGradientFrom: 'white',
-              backgroundGradientTo: 'white',
-              decimalPlaces: 2, // Customize decimal places
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            }}
-            bezier 
-            style={{ marginVertical: 8, borderRadius: 16 }}
-          />
-          <Text style={title.container}>Mood Counts</Text>
-        </View>
-      );
-    }
+  const screenWidth = Dimensions.get('window').width;
 
-
-const screenstyle = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#FCEFE4',
-      alignItems: 'center',
-      justifyContent: 'center',
+  const chartConfig = {
+    backgroundGradientFrom: '#FCEFE4', // Set your background color
+    backgroundGradientTo: '#FCEFE4', // Set your background color
+    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // Customize line color
+    decimalPlaces: 2, // Customize decimal places
+    propsForDots: {
+      r: '6', // Customize dot size
+      strokeWidth: '2', // Customize dot border width
+      stroke: 'black', // Customize dot border color
     },
-  });
+  };
 
-  const title = StyleSheet.create({
-    container: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      alignItems: 'top-center',
+  return (
+    <View style={styles.background}>
+        <ScrollView 
+        horizontal={false}>
+        <Text style={styles.title}>Moods</Text>
+      <LineChart
+        data={{
+          labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'], // Replace with your labels
+          datasets: [
+            {
+              data, // Use the data from your backend here
+            },
+          ],
+        }}
+        width={screenWidth}
+        height={220}
+        yAxisSuffix="M" // You can customize the yAxisSuffix
+        yAxisInterval={2} // You can customize the yAxisInterval
+        chartConfig={chartConfig} // Apply the custom chartConfig
+        bezier
+        style={{
+          margin: 10,
+          borderRadius: 16,
+          padding: 5,
+        }}
+      />
+      <Text style={styles.title}>Mood Counts</Text>
+      <Text style={styles.moodcount}>
+            You logged 12 moods in the last week! Keep it up!
+        </Text>
+        <Text style={styles.title}>Highlights & Lowlights</Text>
+        <FlatList
+            data={[
+            {key: 'Highlight from Oct 13th: Aced my chemistry test!'},
+            {key: 'Lowlight from Oct 14th: Felt sick today morning.'},
+            {key: 'Highlight from Oct 14th: Spent time with friends!'},
+            {key: 'Highlight from Oct 15th: Completed my project.'},
+            ]}
+            renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+            />
+        
+        </ScrollView>
+      
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    backgroundColor: '#FCEFE4',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#C7A2D4',
+    marginHorizontal: 10,
+    marginTop: 10,
+    paddingHorizontal: 10,
+    paddingTop: 40,
+    fontSize: 40
+  },
+  moodcount: {
+    textAlign: 'center',
+    margin: 10,
+    padding: 10,
+    color: '#F5f5dc',
+    margin: 10,
+    padding: 10,
+    borderWidth: 5,
+    borderColor: '#D34a4a',
+    backgroundColor: "#DD7373",
+    borderRadius: 5,
+    fontSize: 20
     },
-  });
+    highlow: {
+        textAlign: 'center',
+        margin: 10,
+        padding: 10,
+        borderWidth: 5,
+        borderColor: '#A86EBC',
+        backgroundColor: '#C7A2D4',
+        borderRadius: 5,
+        fontSize: 15
+    },
+    item: {
+        textAlign: 'center',
+        margin: 10,
+        padding: 10,
+        borderWidth: 5,
+        borderColor: '#A86EBC',
+        backgroundColor: '#C7A2D4',
+        borderRadius: 5,
+        fontSize: 15
+    },
+
+});
