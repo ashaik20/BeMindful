@@ -5,10 +5,6 @@ import BottomTab from "./BottomTab";
 
 export default function App() {
   return (
-    // <View style={styles.container}>
-    //   <Text>BeMindful</Text>
-    //   <StatusBar style="auto" />
-    // </View>
     <NavigationContainer>
       <BottomTab/>
     </NavigationContainer>
