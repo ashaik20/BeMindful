@@ -1,3 +1,4 @@
+import { NavigationContainer } from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
     StyleSheet,
@@ -11,6 +12,7 @@ import {
     Pressable,
     Modal,
   } from 'react-native';
+import BottomTab from './BottomTab';
 
 const styles = StyleSheet.create({
     container: {
@@ -101,6 +103,8 @@ const styles = StyleSheet.create({
 
 export default function HomeScreen() {
     return(
+
+
         <View style ={styles.container}>
             <Text style={styles.img}>
                 IMAGE GOES HERE

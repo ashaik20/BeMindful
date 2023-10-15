@@ -15,7 +15,7 @@ export default function App() {
         <Stack.Screen name="SignUp" component={SignUp}  />
         <Stack.Screen name="SignIn" component={SignIn} />
       </Stack.Navigator>
-    </NavigationContainer>
+    </NavigationContainer> 
   );
 }
 
