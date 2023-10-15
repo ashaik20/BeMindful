@@ -8,11 +8,11 @@ app.use(cors())
 
 app.use(express.json())
 
-const userRoutes = require('./controllers/user.controller')
-app.use('/users', userRoutes)
-
 const dataRoutes = require('./controllers/data.controller')
 app.use('/data', dataRoutes)
+
+const userRoutes = require('./controllers/user.controller')
+app.use('/users', userRoutes)
 
 app.get("/", (req, res) => res.send("Main page")); 
 
